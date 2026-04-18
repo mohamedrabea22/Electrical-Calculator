@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شركة الكهرباء الوطنية - حاسبة الاستهلاك الذكية ⚡</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Enhanced Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-bolt"></i> 
+                حاسبة استهلاك الكهرباء 
+            </div>
+            <nav class="header-nav" id="mainNav">
+                <a href="#calc" class="nav-link">#اعرف_استهلاكك</a>
+            </nav>
+            <!--<button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>-->
+        </div>
+    </header>
+
+    <!-- Hero -->
+    
+
+    <!-- Calculator -->
+    <div class="calculator-container" id="calc">
+        <div class="calc-card">
+            <h2><i class="fas fa-cogs"></i> إدخال البيانات الدقيقة</h2>
+            
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> اسم الجهاز</label>
+                <input type="text" class="form-input" id="deviceName" placeholder="مكيف هواء 1.5 حصان">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-plug"></i> القدرة (واط)</label>
+                <input type="number" class="form-input" id="watts" placeholder="1500" min="1">
+                <div class="preset-grid">
+                    <button class="preset-btn" data-watts="10W" onclick="setPreset('لمبة LED', 10)">لمبة LED</button>
+                    <button class="preset-btn" data-watts="80W" onclick="setPreset('مروحة', 80)">مروحة</button>
+                    <button class="preset-btn" data-watts="180W" onclick="setPreset('ثلاجة', 180)">ثلاجة</button>
+                    <button class="preset-btn" data-watts="1500W" onclick="setPreset('مكيف', 1500)">مكيف 1.5</button>
+                    <button class="preset-btn" data-watts="500W" onclick="setPreset('غسالة', 500)">غسالة</button>
+                    <button class="preset-btn" data-watts="100W" onclick="setPreset('تلفزيون', 100)">تلفزيون</button>
+                    <button class="preset-btn" data-watts="750W" onclick="setPreset('مضخة', 750)">مضخة مياه</button>
+                    <button class="preset-btn" data-watts="1000W" onclick="setPreset('حديد كي', 1000)">حديد كي</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-clock"></i> ساعات التشغيل اليومي</label>
+                <input type="number" class="form-input" id="hours" placeholder="8" min="0" max="24" step="0.5">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-coins"></i> سعر الكيلوواط ساعة</label>
+                <select class="form-select" id="pricePerKwh">
+                    <option value="1.05">1.05 جنيه - منزلي أساسي</option>
+                    <option value="1.25" selected>1.25 جنيه - منزلي متوسط</option>
+                    <option value="1.55">1.55 جنيه - تجاري صغير</option>
+                    <option value="1.75">1.75 جنيه - صناعي</option>
+                    <option value="2.00">2.00 جنيه - فئة خاصة</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-calendar"></i> عدد الأيام في الشهر</label>
+                <input type="number" class="form-input" id="days" value="30" min="1" max="31">
+            </div>
+
+            <button class="calc-btn" onclick="calculate()">
+                <i class="fas fa-bolt"></i> احسب الاستهلاك الآن ⚡
+            </button>
+        </div>
+
+        <div class="calc-card" id="resultsSection" style="display: none;">
+            <h2><i class="fas fa-chart-line"></i> النتائج الدقيقة والمحدثة</h2>
+            
+            <div class="result-item" id="dailyResult">
+                <div>
+                    <i class="fas fa-sun result-icon"></i>
+                    <div class="result-label">الاستهلاك اليومي</div>
+                </div>
+                <div class="result-value" id="dailyKwh">-</div>
+            </div>
+
+            <div class="result-item" id="monthlyResult">
+                <div>
+                    <i class="fas fa-calendar-alt result-icon"></i>
+                    <div class="result-label">الاستهلاك الشهري</div>
+                </div>
+                <div class="result-value" id="monthlyKwh">-</div>
+            </div>
+
+            <div class="result-item" id="dailyCostResult">
+                <div>
+                    <i class="fas fa-coins result-icon"></i>
+                    <div class="result-label">التكلفة اليومية</div>
+                </div>
+                <div class="result-value" id="dailyCost">-</div>
+            </div>
+
+            <div class="result-item" id="monthlyCostResult">
+                <div>
+                    <i class="fas fa-wallet result-icon"></i>
+                    <div class="result-label">التكلفة الشهرية</div>
+                </div>
+                <div class="result-value" id="monthlyCost">-</div>
+            </div>
+
+            <div class="tip-box">
+                <i class="fas fa-lightbulb tip-icon"></i>
+                <h3 class="tip-title">💡 نصائح ذهبية للتوفير الكهربائي:</h3>
+                <ul class="tip-list">
+                    <li>اضبط المكيف على 24° لتوفير 25% من الفاتورة</li>
+                    <li>افصل الأجهزة غير المستخدمة من المقابس</li>
+                    <li>استبدل اللمبات التقليدية بـ LED توفر 80%</li>
+                    <li>استخدم المروحة مع المكيف لتوفير 15°</li>
+                    <li>راجع عدادك كل 3 أشهر للكشف عن التسريبات</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
