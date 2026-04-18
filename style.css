@@ -452,6 +452,7 @@
 
         @media (max-width: 768px) {
             .logo{font-size: 1.4em;}
+            .result-value{font-size: 1em;}
             .header-content { flex-direction: column; gap: 25px; }
             .header-nav { 
                 display: none; 
