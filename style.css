@@ -230,12 +230,12 @@
             position: relative; overflow: hidden;
         }
 
-        .calc-card::before {
+       /* .calc-card::before {
             content: ''; position: absolute; top: -50%; left: -50%;
             width: 200%; height: 200%;
             background: conic-gradient(transparent, rgba(59,130,246,0.05), transparent 30%);
             animation: rotateGlow 8s linear infinite;
-        }
+        }*/
 
         @keyframes rotateGlow {
             100% { transform: rotate(360deg); }
